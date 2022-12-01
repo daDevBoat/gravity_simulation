@@ -174,11 +174,11 @@ while not done:
         factor -= 0.5
 
     if pressedKeys[K_LEFT] and dt >= 0.005:
-        dt_input = round(float(dt_input) - 0.005, 5)
+        dt_input = str(round(float(dt_input) - 0.005, 5))
         dt = float(dt_input)
 
     if pressedKeys[K_RIGHT]:
-        dt_input = round(float(dt_input) + 0.005, 5)
+        dt_input = str(round(float(dt_input) + 0.005, 5))
         dt = float(dt_input)
 
     #subtract the main objects change in x and y direction to all object and thereby centering the main object.
@@ -217,4 +217,3 @@ while not done:
 
     
 pg.quit()
-
