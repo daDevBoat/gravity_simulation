@@ -123,18 +123,18 @@ while not done:
     pressedKeys = pg.key.get_pressed()
 
     if active is True:
-        pg.draw.rect(window,(211, 211, 211), (window_width - 100, 25, 75, 25))
+        pg.draw.rect(window,(211, 211, 211), (window_width - 100, 20, 75, 25))
     else:
-        pg.draw.rect(window,(255, 255, 255), (window_width - 100, 25, 75, 25))
+        pg.draw.rect(window,(255, 255, 255), (window_width - 100, 20, 75, 25))
         
-    input_rect_border = pg.draw.rect(window,(0, 0, 0), (window_width - 100, 25, 75, 25), width=1)
+    input_rect_border = pg.draw.rect(window,(0, 0, 0), (window_width - 100, 20, 75, 25), width=1)
 
     for event in pg.event.get():
-        """continues the game until closing he window"""
+        # continues the game until closing he window 
         if event.type == pg.QUIT:
             done = True
 
-        """activates the textbox"""
+        # activates the textbox
         if event.type == pg.MOUSEBUTTONDOWN and input_rect_border.collidepoint(event.pos):
             active = True
         elif event.type == pg.MOUSEBUTTONDOWN and input_rect_border.collidepoint(event.pos) is False:
@@ -155,7 +155,11 @@ while not done:
 
 
     dt_input_display = font.render(str(dt_input), True, (0, 0, 0))
-    window.blit(dt_input_display, (window_width - 100 + 6, 25 + 6))       
+    window.blit(dt_input_display, (window_width - 100 + 6, 20 + 5))  
+    dt_text = font.render("dt:", True, (0, 0, 0))
+    window.blit(dt_text, (window_width - 130 + 6, 20 + 5))
+    zoom_text = font.render(f"Zoom: {factor:.2f}x", True, (0, 0, 0))
+    window.blit(zoom_text, (20, 20))     
 
     #finds the gravitational force between it self and all the other planets after it in the program.
     for i in range(len(planet_list)):
@@ -168,10 +172,10 @@ while not done:
 
 
     if pressedKeys[K_UP]:
-        factor += 0.5
+        factor += 0.1
 
-    if pressedKeys[K_DOWN] and factor > 1:
-        factor -= 0.5
+    if pressedKeys[K_DOWN] and factor > 1.05:
+        factor -= 0.1
 
     if pressedKeys[K_LEFT] and dt >= 0.005:
         dt_input = str(round(float(dt_input) - 0.005, 5))
@@ -217,3 +221,4 @@ while not done:
 
     
 pg.quit()
+
