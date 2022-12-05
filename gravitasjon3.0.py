@@ -43,8 +43,7 @@ class Planet:
         self.all_poses = []
         self.all_poses_zoomed = []
         self.zoomed_pos = [0, 0]
-        self.zoomed_radius = self.radius / (factor * 0.3) if self.radius / (factor * 0.3) > 1 else 1
-        
+        self.zoomed_radius = self.radius / (factor * 0.3) if self.radius / (factor * 0.3) > 1 else 1 
 
     def tyngdeMet(self, planet: object):
         """
@@ -63,7 +62,6 @@ class Planet:
         #se teoridelen
         #changes from gravity to acceleration
         if (self.pos[0] > planet.pos[0]): 
-            
             self.gravity_x += -gravity_x / self.mass
             planet.gravity_x += gravity_x / planet.mass
         else:
@@ -92,19 +90,12 @@ class Planet:
 
         self.zoomed_pos[0] = self.pos[0]/factor + (window_width - window_width/factor) / 2 #defines the zoomed positions using factor and moving the object to the center.
         self.zoomed_pos[1] = self.pos[1]/factor + (window_height - window_height/factor) / 2
-
         self.all_poses.append([self.pos[0], self.pos[1]])
-        #append only object that are within the window to position list, to reduce the length of the list and making the program faster.
-        """ if 0 - self.radius < self.pos[0] < window_width + self.radius and 0 - self.radius < self.pos[1] < window_height + self.radius:
-            self.all_poses.append([self.pos[0], self.pos[1]]) """
-
-        #if 0 - self.radius / (factor * 0.3) < self.zoomed_pos[0] < window_width + self.radius / (factor * 0.3) and 0 - self.radius / (factor * 0.3) < self.zoomed_pos[1] < window_height + self.radius / (factor * 0.3):
 
     def draw(self):
         """
         draws the planet based on wether the window is zoomed in or not.
         """
-        #desplay_factor = factor*0.3 if factor > 3.3333 else factor*0.3
         self.zoomed_radius = self.radius / (factor * 0.3) if self.radius / (factor * 0.3) > 1 else 1
         pg.draw.circle(window, self.color, (self.zoomed_pos[0], self.zoomed_pos[1]), self.zoomed_radius)
 
@@ -114,13 +105,13 @@ num_of_planets = 50
 # makes a list of planets in a random position within the window. the number of planets are specified in num_of_planets. they also get a random speed and mass.
 for i in range(num_of_planets):
     rdm_num = rdm.randint(1, 4)
-    planet_list.append(Planet("TEst", 10**rdm_num, rdm_num*2, [rdm.randint(0, window_width), rdm.randint(0, window_height)], rdm.randint(-100, 100), rdm.randint(-100, 100), (rdm.randint(0, 255), rdm.randint(0, 255), rdm.randint(0, 255))))
+    planet_list.append(Planet("Planet", 10**rdm_num, rdm_num*2, [rdm.randint(0, window_width), rdm.randint(0, window_height)], rdm.randint(-100, 100), rdm.randint(-100, 100), (rdm.randint(0, 255), rdm.randint(0, 255), rdm.randint(0, 255))))
 
 # make a central "star" and one planet with defined positions, masses and speeds.
 main_r = 6
-test = Planet("TEst", 10**main_r, main_r*2, [window_width / 2 - main_r, window_height / 2 - main_r], 0, 0, (rdm.randint(0, 255), rdm.randint(0, 255), rdm.randint(0, 255)))
+test = Planet("Main Planet", 10**main_r, main_r*2, [window_width / 2 - main_r, window_height / 2 - main_r], 0, 0, (rdm.randint(0, 255), rdm.randint(0, 255), rdm.randint(0, 255)))
 planet_list.append(test)
-planet_list.append(Planet("TEst", 10**3, 3*2, [window_width / 2 - main_r, window_height / 2 - main_r - 100], 105, 0, (rdm.randint(0, 255), rdm.randint(0, 255), rdm.randint(0, 255))))
+planet_list.append(Planet("Planet", 10**3, 3*2, [window_width / 2 - main_r, window_height / 2 - main_r - 100], 105, 0, (rdm.randint(0, 255), rdm.randint(0, 255), rdm.randint(0, 255))))
 
 #defines relevant variables.
 zoomed_out = False
@@ -162,7 +153,7 @@ while not done:
                     except:
                         print("Input a number")
 
-
+    # Draws text to the screen
     dt_input_display = font.render(str(dt_input), True, (0, 0, 0))
     window.blit(dt_input_display, (window_width - 100 + 6, 20 + 5))  
     dt_text = font.render("dt:", True, (0, 0, 0))
@@ -194,16 +185,19 @@ while not done:
         dt_input = str(round(float(dt_input) + 0.005, 5))
         dt = float(dt_input)
 
+    """ 
     #subtract the main objects change in x and y direction to all object and thereby centering the main object.
     for ele in planet_list:
         ele.pos[0] -= test.dx
-        ele.pos[1] -= test.dy
+        ele.pos[1] -= test.dy 
+    """
 
     #draw all object and moves the objects.
     for ele in planet_list:
         ele.draw()
         ele.move(dt) 
 
+    #Sets the new position after zoomin out/in for the paths of all the planets 
     if pressedKeys[K_s] and pressedKeys[K_UP] is False and pressedKeys[K_DOWN] is False:
         for planet in planet_list:
             if 0 - planet.zoomed_radius < planet.zoomed_pos[0] < window_width + planet.zoomed_radius and 0 - planet.zoomed_radius < planet.zoomed_pos[1] < window_height + planet.zoomed_radius:
