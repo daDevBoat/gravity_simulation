@@ -1,4 +1,14 @@
-from this import d
+"""
+The program simulates gravitational forces between planets of different masses.
+We have done some modifications to the mass sizes, speeds, and gravitanional formula for optimization purposes.
+Use arrow up for zoom out, arrow down for zoom in, arrow left for decreasing delta time, arrow right for increasing delta time,
+"a" for showing all pathes taken by the planets since the start of the simulation, and "s" has the same function as "a" except it only shows the 
+paths for the planets on the screen.
+One can also use the textbox to change the delta time.
+
+Made by Da_Boat and ShailsehS1702
+"""
+
 import pygame as pg
 import random as rdm
 from pygame.locals import (K_s, K_a, K_BACKSPACE, K_RETURN, K_UP, K_DOWN, K_LEFT, K_RIGHT)
@@ -18,7 +28,6 @@ factor = 1 #zoom factor
 dt = 0.01   
 
 class Planet:
-    
     def __init__(self, name, mass, radius, pos: list, speed_x, speed_y, color: tuple) -> None:
         self.name = name
         self.mass = mass
@@ -195,7 +204,6 @@ while not done:
         ele.draw()
         ele.move(dt) 
 
-
     if pressedKeys[K_s] and pressedKeys[K_UP] is False and pressedKeys[K_DOWN] is False:
         for planet in planet_list:
             if 0 - planet.zoomed_radius < planet.zoomed_pos[0] < window_width + planet.zoomed_radius and 0 - planet.zoomed_radius < planet.zoomed_pos[1] < window_height + planet.zoomed_radius:
@@ -214,11 +222,8 @@ while not done:
                         pg.draw.circle(window, planet.color, (zoomed_posX, zoomed_posY), planet.zoomed_radius)
         
     #display window
-    
     pg.display.flip()
     clock.tick(60)
     window.fill((255, 255, 255))
 
-    
 pg.quit()
-
